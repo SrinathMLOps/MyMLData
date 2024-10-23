@@ -1,0 +1,283 @@
+Understanding Pearson's Correlation Coefficient (r):
+Range of r:
+r = 1: Perfect positive correlation.
+r = -1: Perfect negative correlation.
+r = 0: No correlation (the variables are unrelated linearly).
+Scatterplot Interpretations in a Single Line:
+r = -0.9: Strong negative linear relationship, where y decreases as x increases.
+r = -0.5: Moderate negative correlation, showing a downward trend but with some variability.
+r = 0.0: No correlation, as there’s no visible relationship between x and y.
+r = 0.5: Moderate positive correlation, with y generally increasing as x increases.
+r = 0.9: Strong positive linear relationship, with y increasing as x increases.
+r = 0.99: Almost perfect positive correlation, where y increases almost exactly in line with x.
+
+library(tidyverse)
+View(anscombe)
+# ............................................
+x = anscombe[,1]
+y = anscombe[,5]
+summary(x)
+sd(x)
+summary(y)
+sd(y)
+cor(x,y)
+
+library(tidyverse)
+ggplot(NULL,aes(x=x,y=y)) +
+  geom_point()
+#.......................................
+x = anscombe[,2]
+y = anscombe[,6]
+
+summary(x)
+sd(x)
+summary(y)
+sd(y)
+cor(x,y)
+library(tidyverse)
+ggplot(NULL,aes(x=x,y=y)) +
+  geom_point()
+
+# What do you notice about the summary statistics?
+#   What do your eyes notice about the relationship between the two variables?
+# in this all points are nrmal  but the Anscomb's quarter is diffrent
+#................................................
+x = anscombe[,3]
+y = anscombe[,7]
+summary(x)
+sd(x)
+summary(y)
+sd(y)
+cor(x,y)
+library(tidyverse)
+ggplot(NULL,aes(x=x,y=y)) +
+  geom_point()+ggtitle("with outlier")
+#correlation coefficient  is less because outlier
+x_colremoved= anscombe[-3,3]
+y_colremoved = anscombe[-3,7]
+summary(x_colremoved)
+sd(x_colremoved)
+summary(y_colremoved)
+sd(y_colremoved)
+cor(x_colremoved,y_colremoved)
+library(tidyverse)
+ggplot(NULL,aes(x=x_colremoved,y=y_colremoved)) +
+  geom_point()+ggtitle("without outlier")
+# What can you conclude from the corresponding scatterplot and value of the
+# correlation coefficient?
+#correlation coefficient  is less because outlier linear and it is .9999
+#........................................................................
+x4 = anscombe[,4]
+y4 = anscombe[,8]
+summary(x)
+summary(y)
+cor(x, y)
+x_colremoved = anscombe[-4, 4]
+y_colremoved = anscombe[-4, 8]
+summary(x_colremoved)
+summary(y_colremoved)
+cor(x_colremoved, y_colremoved)
+ggplot(NULL, aes(x=x, y=y)) + geom_point() + ggtitle("With Outlier")
+ggplot(NULL, aes(x=x_colremoved, y=y_colremoved)) + geom_point() + ggtitle("Without Outlier")
+
+
+
+#......................................................
+# install.packages("gapminder") # run only once
+library(gapminder)
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) +
+  geom_point(aes(colour=continent))
+
+gapminder %>%
+  filter(year==2007) %>%
+  group_by(continent) %>%
+  summarise(num_countries=n_distinct(country),
+            r=cor(gdpPercap,lifeExp))
+
+
+#.................................
+# Use dplyr to create the summary table
+diamonds %>%
+  group_by(cut) %>%  
+  summarise(
+    num_diamonds = n(),  
+    correlation = cor(carat, price)  
+  ) %>%
+  arrange(desc(correlation))  
+
+#..................................................
+
+install.packages("ISLR")
+library(tidyverse)  
+library(ISLR)       
+credit = as_tibble(Credit)  
+credit = select(credit, Balance, Limit, Income) 
+summary(credit)
+
+ggplot(credit, aes(x=Balance, y=Limit)) +
+  geom_point()
+
+ggplot(credit, aes(x=Balance, y=Income)) +
+  geom_point()
+
+ggplot(credit, aes(x=Income, y=Limit)) +
+  geom_point()
+
+cor(credit$Balance, credit$Income)
+
+cor(credit$Income, credit$Limit)
+
+install.packages("gridExtra")
+library(gridExtra)
+plot1 <- ggplot(credit, aes(x=Income, y=Limit)) +
+  geom_point() +
+  ggtitle("Income vs Limit")
+plot2 <- ggplot(credit, aes(x=Balance, y=Income)) +
+  geom_point() +
+  plot3 <- ggplot(credit, aes(x=Balance, y=Limit)) +
+  geom_point()
+  ggtitle("Balance vs Income")
+gridExtra::grid.arrange(plot1, plot2,plot3, ncol = 3)
+
+#...................................
+
+install.packages("GGally")
+library(GGally)
+# Create a scatter matrix for Balance, Limit, and Income
+ggscatmat(select(credit, Balance, Limit, Income))
+
+library(tidyverse)
+View(anscombe)
+# ............................................
+x = anscombe[,1]
+y = anscombe[,5]
+summary(x)
+sd(x)
+summary(y)
+sd(y)
+cor(x,y)
+
+library(tidyverse)
+ggplot(NULL,aes(x=x,y=y)) +
+  geom_point()
+#.......................................
+x = anscombe[,2]
+y = anscombe[,6]
+
+summary(x)
+sd(x)
+summary(y)
+sd(y)
+cor(x,y)
+library(tidyverse)
+ggplot(NULL,aes(x=x,y=y)) +
+  geom_point()
+
+# What do you notice about the summary statistics?
+#   What do your eyes notice about the relationship between the two variables?
+# in this all points are nrmal  but the Anscomb's quarter is diffrent
+#................................................
+x = anscombe[,3]
+y = anscombe[,7]
+summary(x)
+sd(x)
+summary(y)
+sd(y)
+cor(x,y)
+library(tidyverse)
+ggplot(NULL,aes(x=x,y=y)) +
+  geom_point()+ggtitle("with outlier")
+#correlation coefficient  is less because outlier
+x_colremoved= anscombe[-3,3]
+y_colremoved = anscombe[-3,7]
+summary(x_colremoved)
+sd(x_colremoved)
+summary(y_colremoved)
+sd(y_colremoved)
+cor(x_colremoved,y_colremoved)
+library(tidyverse)
+ggplot(NULL,aes(x=x_colremoved,y=y_colremoved)) +
+  geom_point()+ggtitle("without outlier")
+# What can you conclude from the corresponding scatterplot and value of the
+# correlation coefficient?
+#correlation coefficient  is less because outlier linear and it is .9999
+#........................................................................
+x4 = anscombe[,4]
+y4 = anscombe[,8]
+summary(x)
+summary(y)
+cor(x, y)
+x_colremoved = anscombe[-4, 4]
+y_colremoved = anscombe[-4, 8]
+summary(x_colremoved)
+summary(y_colremoved)
+cor(x_colremoved, y_colremoved)
+ggplot(NULL, aes(x=x, y=y)) + geom_point() + ggtitle("With Outlier")
+ggplot(NULL, aes(x=x_colremoved, y=y_colremoved)) + geom_point() + ggtitle("Without Outlier")
+
+
+
+#......................................................
+# install.packages("gapminder") # run only once
+library(gapminder)
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) +
+  geom_point(aes(colour=continent))
+
+gapminder %>%
+  filter(year==2007) %>%
+  group_by(continent) %>%
+  summarise(num_countries=n_distinct(country),
+            r=cor(gdpPercap,lifeExp))
+
+
+#.................................
+# Use dplyr to create the summary table
+diamonds %>%
+  group_by(cut) %>%  
+  summarise(
+    num_diamonds = n(),  
+    correlation = cor(carat, price)  
+  ) %>%
+  arrange(desc(correlation))  
+
+#..................................................
+
+install.packages("ISLR")
+library(tidyverse)  
+library(ISLR)       
+credit = as_tibble(Credit)  
+credit = select(credit, Balance, Limit, Income) 
+summary(credit)
+
+ggplot(credit, aes(x=Balance, y=Limit)) +
+  geom_point()
+
+ggplot(credit, aes(x=Balance, y=Income)) +
+  geom_point()
+
+ggplot(credit, aes(x=Income, y=Limit)) +
+  geom_point()
+
+cor(credit$Balance, credit$Income)
+
+cor(credit$Income, credit$Limit)
+
+install.packages("gridExtra")
+library(gridExtra)
+plot1 <- ggplot(credit, aes(x=Income, y=Limit)) +
+  geom_point() +
+  ggtitle("Income vs Limit")
+plot2 <- ggplot(credit, aes(x=Balance, y=Income)) +
+  geom_point() +
+  plot3 <- ggplot(credit, aes(x=Balance, y=Limit)) +
+  geom_point()
+  ggtitle("Balance vs Income")
+gridExtra::grid.arrange(plot1, plot2,plot3, ncol = 3)
+
+#...................................
+
+install.packages("GGally")
+library(GGally)
+# Create a scatter matrix for Balance, Limit, and Income
+ggscatmat(select(credit, Balance, Limit, Income))
+
